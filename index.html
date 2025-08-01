@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.A.C.C Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --border-radius: 12px;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6f0fa 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, white 0%, #f8fbff 100%);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #718096;
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+        }
+        
+        /* 主要内容布局 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr; /* 移除侧边栏列 */
+            gap: 30px;
+        }
+        
+        /* 侧边栏目录 */
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar h2 i {
+            margin-right: 12px;
+            background: rgba(67, 97, 238, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .course-list {
+            list-style: none;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .course-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .course-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .course-list::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+            border-radius: 10px;
+        }
+        
+        .course-list li {
+            margin-bottom: 12px;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .course-list a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            background: #f9fafc;
+            border-left: 4px solid transparent;
+        }
+        
+        .course-list a:hover {
+            background-color: #f0f5ff;
+            color: var(--primary-color);
+            transform: translateX(5px);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .course-list a.active {
+            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1), transparent);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .course-list i {
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .course-title {
+            flex: 1;
+        }
+        
+        /* 笔记内容区域 */
+        .notes-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            width: 100%; /* 确保占据全部宽度 */
+        }
+        
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .notes-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notes-header h2 i {
+            margin-right: 12px;
+            color: var(--accent-color);
+        }
+        
+        .date {
+            color: #6c757d;
+            font-size: 1rem;
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .course-info {
+            display: flex;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .info-card h3 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .info-card p {
+            color: #4a5568;
+        }
+        
+        .note-content {
+            line-height: 1.8;
+        }
+        
+        .note-content h3 {
+            color: var(--secondary-color);
+            margin: 30px 0 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #eaeaea;
+            position: relative;
+        }
+        
+        .note-content h3::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .note-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+        
+        .note-content ul, .note-content ol {
+            margin-left: 30px;
+            margin-bottom: 25px;
+        }
+        
+        .note-content li {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .note-content li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .code-block {
+            background: #2b2d3a;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            line-height: 1.5;
+            font-size: 1rem;
+            position: relative;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            color: #a9b7c6;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #a9b7c6;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            color: white;
+        }
+        
+        .important {
+            background: linear-gradient(90deg, #fff9db, #fff4cc);
+            border-left: 4px solid #ffd43b;
+            padding: 20px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .important::before {
+            content: "!";
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            width: 30px;
+            height: 30px;
+            background: #ffd43b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #343a40;
+        }
+        
+        .important-content {
+            margin-left: 45px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #6c757d;
+            font-size: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            
+            h1 {
+                font-size: 2.4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .notes-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date {
+                margin-top: 15px;
+            }
+            
+            .course-info {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .notes-container {
+                padding: 20px;
+            }
+        }
+        a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            background: #f9fafc;
+            border-left: 4px solid transparent;
+        }
+        
+        a:hover {
+            background-color: #f0f5ff;
+            color: var(--primary-color);
+            transform: translateX(5px);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        a.active {
+            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1), transparent);
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* 新增登录模态框样式 */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .login-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+        
+        .login-modal.active .login-container {
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            color: var(--warning-color);
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        .blur-content {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        p.ans {
+            background-color: black;
+            color: black;
+            display: inline-block;
+            user-select: none;
+        }
+        p.ans:hover {
+            background-color: transparent;
+            color: black;
+        }
+        img {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        /* 比赛状态样式 */
+        #contest-status {
+            background: #f0f5ff;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        #contest-status p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        #contest-status i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        #countdown {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        #countdownc {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        #countdown4 {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        /* 禁用链接样式 */
+        .disabled-link {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #e9ecef !important;
+            pointer-events: none; /* 阻止所有鼠标事件 */
+        }
+
+        .disabled-link:hover {
+            transform: none !important;
+            border-left: 4px solid transparent !important;
+            background: #e9ecef !important;
+        }
+
+        /* 比赛链接全宽样式 */
+        .full-width-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .disabled-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .disabled-link .disabled-overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> H.A.C.C比赛</h1>
+            <p class="subtitle">
+                H.A.C.C 核桃编程竞赛班编码竞赛<br/>
+                来自核桃编程学员和老师的精心组织和策划，拥有者更加贴近学生情况的题目，还有来自同学之间的互帮互助，增进感情又共同进步
+            </p>
+        </header>
+        
+        <div class="main-content">
+            <main class="notes-container">
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.7 Round 1 A组</h2>
+                    <div class="date">2025年7月28日</div>
+                    
+                    <!-- 添加比赛状态提示 -->
+                    <div id="contest-status">
+                        <p><i class="fas fa-clock"></i> 比赛已于 <strong>2025年7月28日18:00:00</strong> 开始</p>
+                    </div>
+                    
+                    <!-- 修改链接添加ID和点击事件 -->
+                    <a href="https://docs.qq.com/doc/p/c62489d887c6ed67b1f7a4279d843514d48285f8" >
+                        前往查看题面
+                    </a>
+                    <a href="https://hydro.ac/d/center/contest/6886ce0088d2d7285ccd9484" >
+                        前往HydroOJ作答提交
+                    </a>
+                </div>
+                
+                <!-- 修改第二个比赛 -->
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 2 A组</h2>
+                    <div class="date">2025年8月2日</div>
+                    <div id="contest-status">
+                        <p>
+                            H.A.C.C 出题通知：<br/>
+                            H.A.C.C 2025.8 Round 2 A组周赛已经开始出题了，以下是比赛难度<br/>
+                            1.笔试部分<br/>
+                            CSP-J题目 50%<br/>
+                            GESP4~8级 30%<br/>
+                            其余 20%<br/>
+                            2. 机试部分<br/>
+                            1.普及-  CSP-J第一题<br/>
+                            2.普及-  GESP6级真题<br/>
+                            3.普及/提高- 原创题<br/>
+                            4.普及/提高- CSP-J第二题<br/>
+                        </p>
+                        <p><i class="fas fa-clock"></i> 比赛将于 <strong>2025年8月2日18:00:00</strong> 开始</p>
+                        <p>倒计时: <span id="countdown">00:00:00</span></p>
+                    </div>
+                    <a data-contest-id="contest2" 
+                       id="contest-link" 
+                       class="full-width-link disabled-link" 
+                       onclick="openContestDoc(event, this)">
+                        <i class="fas fa-external-link-alt"></i> 
+                        <span>前往查看题面</span>
+                        <span class="disabled-overlay">比赛尚未开始</span>
+                    </a>
+                    <a href="https://hydro.ac/d/center/contest/6889b08a959c0349f82b8306" 
+                       id="contest-link2" 
+                       class="full-width-link disabled-link" 
+                       onclick="return checkContestTime(event)">
+                        <i class="fas fa-external-link-alt"></i> 
+                        <span>前往提交评测（题目不全）</span>
+                        <span class="disabled-overlay">比赛尚未开始</span>
+                    </a>
+                </div>
+                
+                <!-- 修改第三个比赛 -->
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 1 C组</h2>
+                    <div class="date">2025年8月2日</div>
+                    <div id="contest-status">
+                        <p><i class="fas fa-clock"></i> 比赛将于 <strong>2025年8月2日18:00:00</strong> 开始</p>
+                        <p>倒计时: <span id="countdownc">00:00:00</span></p>
+                    </div>
+                    <a data-contest-id="contest3" 
+                       id="contest-link-C" 
+                       class="full-width-link disabled-link" 
+                       onclick="openContestDoc(event, this)">
+                        <i class="fas fa-external-link-alt"></i> 
+                        <span>前往查看题面</span>
+                        <span class="disabled-overlay">比赛尚未开始</span>
+                    </a>
+                </div>
+
+                <!-- 修改第四个比赛 -->
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Ext1 蓝桥青少省赛特别赛</h2>
+                    <div class="date">2025年8月2日</div>
+                    <div id="contest-status">
+                        <p><i class="fas fa-clock"></i> 比赛将于 <strong>2025年8月2日18:00:00</strong> 开始</p>
+                        <p>倒计时: <span id="countdown4">00:00:00</span></p>
+                    </div>
+                    <a data-contest-id="contest4" 
+                       id="contest-link-4" 
+                       class="full-width-link disabled-link" 
+                       onclick="openContestDoc(event, this)">
+                        <i class="fas fa-external-link-alt"></i> 
+                        <span>前往查看题面</span>
+                        <span class="disabled-overlay">比赛尚未开始</span>
+                    </a>
+                </div>
+            </main>
+        </div>
+        
+        <footer>
+            <p>© 2025 H.A.C.C</p>
+        </footer>
+    </div>
+
+    <script>
+        // 全局存储文档URL
+        const contestDocUrls = {};
+        
+        // 加载XML配置
+        function loadContestDocUrls() {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', './conf.xml', true);
+                xhr.overrideMimeType('text/xml');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const xmlDoc = xhr.responseXML;
+                        const contests = xmlDoc.getElementsByTagName('contest');
+                        for (let i = 0; i < contests.length; i++) {
+                            const contest = contests[i];
+                            const id = contest.getAttribute('id');
+                            const docUrl = contest.getElementsByTagName('docUrl')[0].textContent;
+                            contestDocUrls[id] = docUrl;
+                        }
+                        resolve();
+                    } else {
+                        reject('Failed to load contest URLs');
+                    }
+                };
+                xhr.onerror = reject;
+                xhr.send();
+            });
+        }
+        
+        // 打开文档函数（修复后）
+        function openContestDoc(event, element) {
+            event.preventDefault(); // 阻止默认行为
+            event.stopPropagation(); // 阻止事件冒泡
+            
+            const contestId = element.getAttribute('data-contest-id');
+            const startTime = new Date('2025-08-02T18:00:00');
+            const now = new Date();
+            
+            if (now < startTime) {
+                alert("比赛尚未开始，请等待！");
+                return;
+            }
+            
+            // 确保XML已加载
+            if (Object.keys(contestDocUrls).length === 0) {
+                loadContestDocUrls().then(() => {
+                    if (contestDocUrls[contestId]) {
+                        window.location.href = contestDocUrls[contestId];
+                    } else {
+                        alert('比赛题面链接不存在，请联系管理员');
+                    }
+                }).catch(() => {
+                    alert('获取比赛题面失败，请刷新页面重试');
+                });
+            } else {
+                if (contestDocUrls[contestId]) {
+                    window.location.href = contestDocUrls[contestId];
+                } else {
+                    alert('比赛题面链接不存在，请联系管理员');
+                }
+            }
+        }
+
+        // 页面加载完成后执行
+        window.addEventListener('DOMContentLoaded', function() {
+            // 预先加载文档URL
+            loadContestDocUrls().catch(console.error);
+            
+            const contestStartTime = new Date('2025-08-02T18:00:00');
+
+            const countdownElement = document.getElementById('countdown');
+            const countdownElementc = document.getElementById('countdownc');
+            const countdownElement4 = document.getElementById('countdown4');
+
+            const contestLink = document.getElementById('contest-link');
+            const contestLink2 = document.getElementById('contest-link2');
+            const contestLinkc = document.getElementById('contest-link-C');
+            const contestLink4 = document.getElementById('contest-link-4');
+            
+            // 检查比赛时间函数
+            function checkContestTime(event) {
+                const now = new Date();
+                if (now < contestStartTime) {
+                    alert("比赛尚未开始，请等待！");
+                    event.preventDefault();
+                    return false;
+                }
+                return true;
+            }
+
+            // 倒计时更新函数
+            function updateCountdown() {
+                const now = new Date();
+                const timeDiff = contestStartTime - now;
+                
+                if (timeDiff <= 0) {
+                    countdownElement.textContent = "比赛已开始！";
+                    countdownElementc.textContent = "比赛已开始！";
+                    countdownElement4.textContent = "比赛已开始！";
+
+                    contestLink.classList.remove('disabled-link');
+                    contestLink2.classList.remove('disabled-link');
+                    contestLinkc.classList.remove('disabled-link');
+                    contestLink4.classList.remove('disabled-link');
+                    return;
+                }
+                
+                // 计算剩余时间
+                const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                
+                // 更新倒计时显示
+                countdownElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                countdownElementc.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                countdownElement4.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            // 初始化链接状态
+            const now = new Date();
+            if (now < contestStartTime) {
+                contestLink.classList.add('disabled-link');
+                contestLink2.classList.add('disabled-link');
+                contestLinkc.classList.add('disabled-link');
+                contestLink4.classList.add('disabled-link');
+            } else {
+                contestLink.classList.remove('disabled-link');
+                contestLink2.classList.remove('disabled-link');
+                contestLinkc.classList.remove('disabled-link');
+                contestLink4.classList.remove('disabled-link');
+            }
+            
+            // 启动倒计时定时器
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // 为目录项添加悬停效果
+            const courseLinks = document.querySelectorAll('.course-list a');
+            courseLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

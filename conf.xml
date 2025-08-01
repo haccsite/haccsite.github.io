@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contests>
+    <contest id="contest2">
+        <name>H.A.C.C 2025.8 Round 2 A组</name>
+        <docUrl>https://docs.qq.com/doc/p/c1adaea840feb771058b927ee470bd565b0fd1b8</docUrl>
+    </contest>
+    <contest id="contest3">
+        <name>H.A.C.C 2025.8 Round 1 C组</name>
+        <docUrl>https://docs.qq.com/doc/p/d5e1136527f0ee485fe92a428027b579a66fd7cc</docUrl>
+    </contest>
+    <contest id="contest4">
+        <name>H.A.C.C 2025.8 Ext1 蓝桥青少省赛特别赛</name>
+        <docUrl>https://docs.qq.com/doc/p/47e47c67c1bbf8891e3c5bebf1e8e160a8e96e56</docUrl>
+    </contest>
+</contests>
