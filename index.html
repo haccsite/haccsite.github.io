@@ -873,7 +873,7 @@
             const countdownElement4 = document.getElementById('countdown4');
 
             const contestLink = document.getElementById('contest-link');
-            const contestLink2 = document.getElementById('contest-link2');
+            //const contestLink2 = document.getElementById('contest-link2');
             const contestLinkc = document.getElementById('contest-link-C');
             const contestLink4 = document.getElementById('contest-link-4');
             
@@ -899,7 +899,7 @@
                     countdownElement4.textContent = "比赛已开始！";
 
                     contestLink.classList.remove('disabled-link');
-                    contestLink2.classList.remove('disabled-link');
+                    //contestLink2.classList.remove('disabled-link');
                     contestLinkc.classList.remove('disabled-link');
                     contestLink4.classList.remove('disabled-link');
                     return;
@@ -923,12 +923,12 @@
             const now = new Date();
             if (now < contestStartTime) {
                 contestLink.classList.add('disabled-link');
-                contestLink2.classList.add('disabled-link');
+                //contestLink2.classList.add('disabled-link');
                 contestLinkc.classList.add('disabled-link');
                 contestLink4.classList.add('disabled-link');
             } else {
                 contestLink.classList.remove('disabled-link');
-                contestLink2.classList.remove('disabled-link');
+                //contestLink2.classList.remove('disabled-link');
                 contestLinkc.classList.remove('disabled-link');
                 contestLink4.classList.remove('disabled-link');
             }
