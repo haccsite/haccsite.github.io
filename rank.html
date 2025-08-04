@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H.A.C.C Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --border-radius: 12px;
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6f0fa 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(120deg, white 0%, #f8fbff 100%);
+        }
+
+            header::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 6px;
+                background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+            }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #718096;
+        }
+
+            .breadcrumb a {
+                color: var(--accent-color);
+                text-decoration: none;
+                transition: var(--transition);
+            }
+
+                .breadcrumb a:hover {
+                    text-decoration: underline;
+                }
+
+            .breadcrumb span {
+                margin: 0 10px;
+            }
+
+        /* 主要内容布局 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr; /* 移除侧边栏列 */
+            gap: 30px;
+        }
+
+        /* 笔记内容区域 */
+        .notes-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            width: 100%; /* 确保占据全部宽度 */
+        }
+
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .notes-header h2 {
+                color: var(--primary-color);
+                font-size: 2rem;
+                display: flex;
+                align-items: center;
+            }
+
+                .notes-header h2 i {
+                    margin-right: 12px;
+                    color: var(--accent-color);
+                }
+
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #6c757d;
+            font-size: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .notes-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .date {
+                margin-top: 15px;
+            }
+
+            .course-info {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .notes-container {
+                padding: 20px;
+            }
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            background: #f9fafc;
+            border-left: 4px solid transparent;
+        }
+
+            a:hover {
+                background-color: #f0f5ff;
+                color: var(--primary-color);
+                transform: translateX(5px);
+                border-left: 4px solid var(--accent-color);
+            }
+
+            a.active {
+                background: linear-gradient(90deg, rgba(67, 97, 238, 0.1), transparent);
+                color: var(--primary-color);
+                font-weight: 600;
+                border-left: 4px solid var(--primary-color);
+            }
+
+        .login-modal.active .login-container {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> H.A.C.C比赛</h1>
+            <p class="subtitle">
+                H.A.C.C 核桃编程竞赛班编码竞赛<br />
+                来自核桃编程学员和老师的精心组织和策划，拥有者更加贴近学生情况的题目，还有来自同学之间的互帮互助，增进感情又共同进步
+            </p>
+        </header>
+
+        <div class="main-content">
+            <main class="notes-container">
+                <!-- 排行榜 -->
+                <a href="index.html">返回主页</a>
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Ext1 蓝桥青少省赛特别赛</h2>
+                    <p><strong>比赛编号：25086100</strong></p>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>准考证号</th>
+                                <th>选择题</th>
+                                <th>第一题</th>
+                                <th>第二题</th>
+                                <th>第三题</th>
+                                <th>第四题</th>
+                                <th>第五题</th>
+                                <th>第六题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 1 C组</h2>
+                    <p><strong>比赛编号：25080167</strong></p>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>准考证号</th>
+                                <th>选择题</th>
+                                <th>判断题</th>
+                                <th>第一题</th>
+                                <th>第二题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 2 A组</h2>
+                    <p><strong>比赛编号：25080265</strong></p>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>准考证号</th>
+                                <th>选择题</th>
+                                <th>阅读程序</th>
+                                <th>完善程序</th>
+                                <th>第一题</th>
+                                <th>第二题</th>
+                                <th>第三题</th>
+                                <th>第四题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note-content">
+                    <h2><i class="fab fa-a301"></i> H.A.C.C 2025.7 Round 1 A组</h2>
+                    <p><strong>比赛编号：25070165</strong></p>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>准考证号</th>
+                                <th>选择题</th>
+                                <th>阅读程序</th>
+                                <th>完善程序</th>
+                                <th>第一题</th>
+                                <th>第二题</th>
+                                <th>第三题</th>
+                                <th>第四题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>© 2025 H.A.C.C</p>
+        </footer>
+    </div>
+</body>
+</html>
