@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contests>
-    <contest id="contest2">
-        <name>H.A.C.C 2025.8 Round 3 A组</name>
-        <docUrl>https://kcn36q6bba5v.feishu.cn/docx/ICN5dyLrbof04zxAZe4cOY60nxe</docUrl>
-    </contest>
-    <contest id="contest3">
-        <name>H.A.C.C 2025.8 Round 2 C组</name>
-        <docUrl>https://kcn36q6bba5v.feishu.cn/docx/WjA2d9RBfocLrSxLTPfcTD5Lnxg</docUrl>
+    <contest id="contest">
+        <name>H.A.C.C 2025.8 Round 1 Remake AC</name>
+        <docUrl>https://kcn36q6bba5v.feishu.cn/docx/JE3KdNtiLoutrMxcYficKiijnIh</docUrl>
     </contest>
 </contests>
+
