@@ -719,7 +719,7 @@
                     <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 2 C组</h2>
                     <div class="date">2025年8月9日</div>
                     <div id="contest-status">
-                        <p><i class="fas fa-clock"></i> 比赛已于 <strong>2025年8月9日18:00:00</strong> 开始</p><br/>
+                        <p><i class="fas fa-clock"></i> 比赛已结束</p><br/>
                         <strong>本场比赛的编号：25080967</strong>
                     </div>
                     <a href="https://kcn36q6bba5v.feishu.cn/docx/WjA2d9RBfocLrSxLTPfcTD5Lnxg">
@@ -731,7 +731,7 @@
                     <h2><i class="fab fa-a301"></i> H.A.C.C 2025.8 Round 3 A组</h2>
                     <div class="date">2025年8月9日</div>
                     <div id="contest-status">
-                        <p><i class="fas fa-clock"></i> 比赛已于 <strong>2025年8月9日18:00:00</strong> 开始</p><br/>
+                        <p><i class="fas fa-clock"></i> 比赛已结束</p><br/>
                         <strong>本场比赛的编号：25080965</strong>
                     </div>
                     <a href="https://kcn36q6bba5v.feishu.cn/docx/ICN5dyLrbof04zxAZe4cOY60nxe">
@@ -876,13 +876,11 @@
             // 预先加载文档URL
             loadContestDocUrls().catch(console.error);
             
-            const contestStartTime = new Date('2025-08-09T18:00:00');
+            const contestStartTime = new Date('2025-08-023T18:00:00');
 
             const countdownElement = document.getElementById('countdown');
-            const countdownElementc = document.getElementById('countdown2');
 
-            const contestLink = document.getElementById('contest-link3');
-            const contestLink2 = document.getElementById('contest-link2');
+            const contestLink = document.getElementById('contest-link');
             
             // 检查比赛时间函数
             function checkContestTime(event) {
@@ -902,10 +900,8 @@
                 
                 if (timeDiff <= 0) {
                     countdownElement.textContent = "比赛已开始！";
-                    countdownElementc.textContent = "比赛已开始！";
 
                     contestLink.classList.remove('disabled-link');
-                    contestLink2.classList.remove('disabled-link');
                     return;
                 }
                 
@@ -917,18 +913,14 @@
                 // 更新倒计时显示
                 countdownElement.textContent = 
                     `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                countdownElementc.textContent = 
-                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
 
             // 初始化链接状态
             const now = new Date();
             if (now < contestStartTime) {
                 contestLink.classList.add('disabled-link');
-                contestLink2.classList.add('disabled-link');
             } else {
                 contestLink.classList.remove('disabled-link');
-                contestLink2.classList.remove('disabled-link');
             }
             
             // 启动倒计时定时器
@@ -951,6 +943,7 @@
 </body>
 
 </html>
+
 
 
 
